@@ -1,30 +1,25 @@
 name: API Automation CI/CD Pipeline
 
-# 1. TRIGGER: When should the robot wake up? 
-# Answer: Every time someone "pushes" code to the "main" branch!
 on:
   push:
     branches: [ "main" ]
 
 jobs:
   run-api-tests:
-    # 2. THE COMPUTER: What kind of virtual computer do we need? 
-    # Answer: The latest version of Ubuntu (Linux).
     runs-on: ubuntu-latest
 
     steps:
-    # 3. Step 1: Download our code from the repository onto the virtual computer
+    # 1. Upgraded to v4 to fix the Node.js warning!
     - name: Checkout Code
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
 
-    # 4. Step 2: Install Java (JDK 11) on the virtual computer
-    - name: Set up Java JDK 11
-      uses: actions/setup-java@v3
+    # 2. Upgraded to v4 and changed Java to 17 to fix the PlayStation error!
+    - name: Set up Java JDK 17
+      uses: actions/setup-java@v4
       with:
-        java-version: '11'
+        java-version: '17'
         distribution: 'temurin'
         cache: maven
 
-    # 5. Step 3: Run the exact Maven command to execute our framework!
     - name: Run API Tests via Maven
       run: mvn clean test
